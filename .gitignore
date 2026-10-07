@@ -12,6 +12,7 @@ dist/
 frontend/dist/
 .angular/
 .vscode/
+frontend/.vscode/
 .idea/
 *.log
 .DS_Store
