@@ -1,0 +1,63 @@
+<aside class="w-full bg-slate-900 text-slate-300 lg:fixed lg:inset-y-0 lg:w-64 lg:overflow-y-auto">
+  <div class="flex items-center gap-2 px-6 py-5 text-lg font-semibold text-blue-400">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
+      <path d="M4 19h16v2H2V3h2v16Zm4-6h2v4H8v-4Zm5-5h2v9h-2V8Zm5-3h2v12h-2V5Z" />
+    </svg>
+    <span class="text-white">Freelancer<span class="text-blue-400">Track</span></span>
+  </div>
+
+  <nav class="space-y-1 px-3">
+    <a
+      routerLink="/dashboard"
+      routerLinkActive="bg-blue-600 text-white"
+      class="block rounded-xl px-4 py-2.5 text-sm font-medium text-slate-300"
+    >
+      Dashboard
+    </a>
+    <a
+      routerLink="/clients"
+      routerLinkActive="bg-blue-600 text-white"
+      class="block rounded-xl px-4 py-2.5 text-sm font-medium text-slate-300"
+    >
+      Clients
+    </a>
+    <a
+      routerLink="/projects"
+      routerLinkActive="bg-blue-600 text-white"
+      class="block rounded-xl px-4 py-2.5 text-sm font-medium text-slate-300"
+    >
+      Projects
+    </a>
+    <a
+      routerLink="/income"
+      routerLinkActive="bg-blue-600 text-white"
+      class="block rounded-xl px-4 py-2.5 text-sm font-medium text-slate-300"
+    >
+      Income
+    </a>
+    <a
+      routerLink="/reports"
+      routerLinkActive="bg-blue-600 text-white"
+      class="block rounded-xl px-4 py-2.5 text-sm font-medium text-slate-300"
+    >
+      Reports
+    </a>
+  </nav>
+
+  <div class="mt-8 space-y-1 px-3 pb-6">
+    <a
+      routerLink="/settings"
+      routerLinkActive="bg-blue-600 text-white"
+      class="block rounded-xl px-4 py-2.5 text-sm font-medium text-slate-300"
+    >
+      Settings
+    </a>
+    <button
+      type="button"
+      (click)="logout()"
+      class="block w-full rounded-xl px-4 py-2.5 text-left text-sm text-slate-300 hover:bg-slate-800"
+    >
+      Logout
+    </button>
+  </div>
+</aside>
