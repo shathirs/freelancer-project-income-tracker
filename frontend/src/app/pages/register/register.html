@@ -137,6 +137,10 @@
               }
             </div>
 
+            @if (errorMessage()) {
+              <p class="text-sm text-red-500">{{ errorMessage() }}</p>
+            }
+
             <button
               type="submit"
               class="w-full rounded-xl bg-blue-600 py-3 font-semibold text-white hover:bg-blue-700"

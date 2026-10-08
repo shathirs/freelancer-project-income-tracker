@@ -94,6 +94,13 @@
               <a href="#" class="font-medium text-blue-600">Forgot password?</a>
             </div>
 
+            @if (errorMessage()) {
+              <p class="text-sm text-red-500">{{ errorMessage() }}</p>
+            }
+            @if (successMessage()) {
+              <p class="text-sm text-green-600">{{ successMessage() }}</p>
+            }
+
             <button
               type="submit"
               class="w-full rounded-xl bg-blue-600 py-3 font-semibold text-white hover:bg-blue-700"

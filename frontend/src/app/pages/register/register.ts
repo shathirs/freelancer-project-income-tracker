@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
 import {
   AbstractControl,
@@ -6,7 +7,8 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../core/auth.service';
 
 function passwordsMatch(control: AbstractControl): ValidationErrors | null {
   const password = control.get('password')?.value;
@@ -27,8 +29,11 @@ function passwordsMatch(control: AbstractControl): ValidationErrors | null {
 })
 export class Register {
   private readonly formBuilder = inject(FormBuilder);
+  private readonly auth = inject(AuthService);
+  private readonly router = inject(Router);
 
   readonly showPassword = signal(false);
+  readonly errorMessage = signal('');
   readonly showConfirmPassword = signal(false);
 
   readonly form = this.formBuilder.nonNullable.group(
@@ -55,6 +60,14 @@ export class Register {
       return;
     }
 
-    console.log(this.form.getRawValue());
+    this.errorMessage.set('');
+    const { fullName, email, password } = this.form.getRawValue();
+
+    this.auth.register(fullName, email, password).subscribe({
+      next: () => this.router.navigate(['/dashboard']),
+      error: (error: HttpErrorResponse) => {
+        this.errorMessage.set(error.error?.message ?? 'Registration failed');
+      },
+    });
   }
 }
