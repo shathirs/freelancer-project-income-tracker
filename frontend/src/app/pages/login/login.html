@@ -1,0 +1,118 @@
+<main class="min-h-screen flex items-center justify-center p-4 sm:p-8">
+    <section
+      class="w-full max-w-5xl min-h-[640px] bg-white rounded-3xl shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-2"
+    >
+      <div class="bg-gradient-to-br from-slate-50 to-blue-50 p-8 sm:p-10 flex flex-col">
+        <div class="flex items-center gap-2 text-blue-600 font-semibold text-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
+            <path d="M4 19h16v2H2V3h2v16Zm4-6h2v4H8v-4Zm5-5h2v9h-2V8Zm5-3h2v12h-2V5Z" />
+          </svg>
+          <span class="text-slate-900">Freelancer<span class="text-blue-600">Track</span></span>
+        </div>
+
+        <h1 class="mt-8 text-3xl sm:text-4xl font-bold text-slate-900 leading-tight">
+          Track your projects.<br />
+          Manage your income.
+        </h1>
+
+        <p class="mt-4 text-slate-500 max-w-sm">
+          Keep everything in one place — clients, projects, and your earnings.
+        </p>
+
+        <div class="mt-8 grid grid-cols-2 gap-3 max-w-md">
+          <div class="flex items-center gap-2 rounded-full bg-white/80 px-3 py-2 text-sm text-slate-700 shadow-sm">
+            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-blue-100 text-blue-600 text-xs">Bk</span>
+            Manage Clients
+          </div>
+          <div class="flex items-center gap-2 rounded-full bg-white/80 px-3 py-2 text-sm text-slate-700 shadow-sm">
+            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-green-100 text-green-600 text-xs">Pr</span>
+            Track Projects
+          </div>
+          <div class="flex items-center gap-2 rounded-full bg-white/80 px-3 py-2 text-sm text-slate-700 shadow-sm">
+            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-violet-100 text-violet-600 text-xs">$</span>
+            Monitor Income
+          </div>
+          <div class="flex items-center gap-2 rounded-full bg-white/80 px-3 py-2 text-sm text-slate-700 shadow-sm">
+            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-indigo-100 text-indigo-600 text-xs">Rp</span>
+            View Reports
+          </div>
+        </div>
+
+        <p class="mt-auto pt-10 text-blue-500 italic text-lg">
+          Build your freelance journey
+        </p>
+      </div>
+  
+      <div class="bg-white p-8 sm:p-12 flex items-center">
+        <div class="w-full max-w-md mx-auto">
+          <h2 class="text-3xl font-bold text-slate-900">Welcome Back</h2>
+          <p class="mt-2 text-slate-500">Log in to your account to continue</p>
+
+          <form class="mt-8 space-y-5" [formGroup]="form" (ngSubmit)="submit()">
+            <div>
+              <label for="email" class="block text-sm font-semibold text-slate-800">Email Address</label>
+              <input
+                id="email"
+                type="email"
+                formControlName="email"
+                placeholder="Enter your email"
+                class="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+              />
+              @if (form.controls.email.touched && form.controls.email.invalid) {
+                <p class="mt-1 text-sm text-red-500">Enter a valid email address.</p>
+              }
+            </div>
+
+            <div>
+              <label for="password" class="block text-sm font-semibold text-slate-800">Password</label>
+              <div class="relative mt-2">
+                <input
+                  id="password"
+                  [type]="showPassword() ? 'text' : 'password'"
+                  formControlName="password"
+                  placeholder="Enter your password"
+                  class="w-full rounded-xl border border-slate-200 px-4 py-3 pr-12 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                />
+                <button
+                  type="button"
+                  (click)="togglePassword()"
+                  class="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-slate-400"
+                >
+                  {{ showPassword() ? 'Hide' : 'Show' }}
+                </button>
+              </div>
+              @if (form.controls.password.touched && form.controls.password.invalid) {
+                <p class="mt-1 text-sm text-red-500">Password must be at least 6 characters.</p>
+              }
+            </div>
+
+            <div class="flex items-center justify-between text-sm">
+              <label class="flex items-center gap-2 text-slate-600">
+                <input type="checkbox" formControlName="remember" class="h-4 w-4 rounded border-slate-300 text-blue-600" />
+                Remember me
+              </label>
+              <a href="#" class="font-medium text-blue-600">Forgot password?</a>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full rounded-xl bg-blue-600 py-3 font-semibold text-white hover:bg-blue-700"
+            >
+              Log In →
+            </button>
+          </form>
+
+          <div class="my-6 flex items-center gap-3 text-sm text-slate-400">
+            <span class="h-px flex-1 bg-slate-200"></span>
+            Or
+            <span class="h-px flex-1 bg-slate-200"></span>
+          </div>
+
+          <p class="rounded-xl border border-slate-200 py-3 text-center text-sm text-slate-500">
+            Don't have an account?
+            <a href="#" class="font-semibold text-blue-600">Register</a>
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
