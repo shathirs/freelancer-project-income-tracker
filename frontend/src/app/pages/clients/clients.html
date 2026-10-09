@@ -21,22 +21,50 @@
       </div>
 
       <section class="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <article class="rounded-2xl bg-white p-5 shadow-sm">
-          <p class="text-sm text-slate-500">Total Clients</p>
-          <p class="mt-2 text-3xl font-bold text-slate-900">{{ clients().length }}</p>
+        <article class="flex items-start gap-4 rounded-2xl bg-white p-5 shadow-sm">
+          <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-600">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+              <path d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm8 1a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM8 13c-3.3 0-6 1.6-6 3.5V19h10v-2.5C12 14.6 10.3 13 8 13Zm8 1c-.4 0-.9 0-1.3.1 1.4.8 2.3 1.9 2.3 3.2V19h7v-1.8c0-1.8-2.5-3.2-5.7-3.2h-2.3Z" />
+            </svg>
+          </span>
+          <div>
+            <p class="text-sm text-slate-500">Total Clients</p>
+            <p class="mt-1 text-3xl font-bold text-slate-900">{{ clients().length }}</p>
+          </div>
         </article>
-        <article class="rounded-2xl bg-white p-5 shadow-sm">
-          <p class="text-sm text-slate-500">Active</p>
-          <p class="mt-2 text-3xl font-bold text-emerald-600">{{ activeCount() }}</p>
+        <article class="flex items-start gap-4 rounded-2xl bg-white p-5 shadow-sm">
+          <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+              <path d="M9.2 16.2 5 12l1.4-1.4 2.8 2.8 8.4-8.4L19 6.4l-9.8 9.8Z" />
+            </svg>
+          </span>
+          <div>
+            <p class="text-sm text-slate-500">Active</p>
+            <p class="mt-1 text-3xl font-bold text-emerald-600">{{ activeCount() }}</p>
+          </div>
         </article>
-        <article class="rounded-2xl bg-white p-5 shadow-sm">
-          <p class="text-sm text-slate-500">Inactive</p>
-          <p class="mt-2 text-3xl font-bold text-slate-900">{{ inactiveCount() }}</p>
+        <article class="flex items-start gap-4 rounded-2xl bg-white p-5 shadow-sm">
+          <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-red-100 text-red-600">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+              <path d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm0 2c-3.3 0-6 1.6-6 3.5V19h8.2l-.7-2H4.2C4.8 15.6 6.3 15 8 15c.5 0 1 .1 1.4.2l1.2-1.2A8 8 0 0 0 8 13Zm8.3.2 1.4 1.4-2.2 2.2 2.2 2.2-1.4 1.4-2.2-2.2-2.2 2.2-1.4-1.4 2.2-2.2-2.2-2.2 1.4-1.4 2.2 2.2 2.2-2.2Z" />
+            </svg>
+          </span>
+          <div>
+            <p class="text-sm text-slate-500">Inactive</p>
+            <p class="mt-1 text-3xl font-bold text-red-600">{{ inactiveCount() }}</p>
+          </div>
         </article>
-        <article class="rounded-2xl bg-white p-5 shadow-sm">
-          <p class="text-sm text-slate-500">New This Month</p>
-          <p class="mt-2 text-3xl font-bold text-slate-900">{{ newThisMonth() }}</p>
-          <p class="mt-2 text-xs text-slate-400">Added in {{ monthLabel }}</p>
+        <article class="flex items-start gap-4 rounded-2xl bg-white p-5 shadow-sm">
+          <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-amber-100 text-amber-600">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+              <path d="M7 2h2v2h6V2h2v2h3v18H4V4h3V2Zm13 8H6v10h14V10ZM8 12h2v2H8v-2Zm4 0h2v2h-2v-2Zm4 0h2v2h-2v-2Z" />
+            </svg>
+          </span>
+          <div>
+            <p class="text-sm text-slate-500">New This Month</p>
+            <p class="mt-1 text-3xl font-bold text-slate-900">{{ newThisMonth() }}</p>
+            <p class="mt-1 text-xs text-slate-400">Added in {{ monthLabel }}</p>
+          </div>
         </article>
       </section>
 
