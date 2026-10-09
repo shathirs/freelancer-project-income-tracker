@@ -4,6 +4,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Navbar } from '../../layout/navbar/navbar';
 import { Sidebar } from '../../layout/sidebar/sidebar';
 import { Client, ClientService } from '../../core/client.service';
+import { Project, ProjectService } from '../../core/project.service';
 
 @Component({
   selector: 'app-clients',
@@ -13,9 +14,11 @@ import { Client, ClientService } from '../../core/client.service';
 })
 export class Clients {
   private readonly clientService = inject(ClientService);
+  private readonly projectService = inject(ProjectService);
   private readonly formBuilder = inject(FormBuilder);
 
   readonly clients = signal<Client[]>([]);
+  readonly projects = signal<Project[]>([]);
   readonly search = signal('');
   readonly statusFilter = signal('');
   readonly sort = signal<'newest' | 'oldest'>('newest');
@@ -85,12 +88,36 @@ export class Clients {
 
   constructor() {
     this.loadClients();
+    this.loadProjects();
   }
 
   loadClients(): void {
     this.clientService.list().subscribe({
       next: (response) => this.clients.set(response.clients),
     });
+  }
+
+  loadProjects(): void {
+    this.projectService.list().subscribe({
+      next: (response) => this.projects.set(response.projects),
+    });
+  }
+
+  projectCount(clientId: string): number {
+    return this.projectsFor(clientId).length;
+  }
+
+  totalEarned(clientId: string): string {
+    const total = this.projectsFor(clientId).reduce((sum, project) => sum + project.fee, 0);
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      maximumFractionDigits: 0,
+    }).format(total);
+  }
+
+  private projectsFor(clientId: string): Project[] {
+    return this.projects().filter((project) => project.client._id === clientId);
   }
 
   onSearch(value: string): void {

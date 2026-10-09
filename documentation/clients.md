@@ -4,7 +4,7 @@ A client is a record owned by the logged-in freelancer. Clients are not login ac
 
 The page supports create, read, update, and delete, plus search by name or email, a status filter, and sort by newest or oldest. Name and email are required. Company and phone are optional.
 
-Projects and total earned stay at `0` until those features exist.
+The Projects column counts that client’s projects. Total Earned is the sum of those project fees. Recorded payments are not included yet.
 
 ## Client record
 
