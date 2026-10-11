@@ -3,7 +3,464 @@
   <div class="min-w-0 flex-1 lg:pl-64">
     <app-navbar />
     <main class="p-6">
-      <h1 class="text-2xl font-bold text-slate-900">Income</h1>
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <h1 class="text-2xl font-bold text-slate-900">Income</h1>
+          <p class="mt-1 text-sm text-slate-500">Track your earnings, payments and financial progress.</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2 rounded-xl bg-white px-3 py-2 text-sm text-slate-600 shadow-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 text-slate-400">
+            <path d="M7 2h2v2h6V2h2v2h3v18H4V4h3V2Zm13 8H6v10h14V10Z" />
+          </svg>
+          <input
+            type="date"
+            class="bg-transparent outline-none"
+            [value]="from()"
+            (change)="onFrom($any($event.target).value)"
+          />
+          <span>–</span>
+          <input
+            type="date"
+            class="bg-transparent outline-none"
+            [value]="to()"
+            (change)="onTo($any($event.target).value)"
+          />
+        </div>
+      </div>
+
+      <section class="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <article class="flex items-start gap-4 rounded-2xl bg-emerald-50 p-5 shadow-sm">
+          <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+              <path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2H4V7Zm0 4h16v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-6Zm3 3h4v2H7v-2Z" />
+            </svg>
+          </span>
+          <div>
+            <p class="text-sm text-emerald-700">Total Income</p>
+            <p class="mt-1 text-3xl font-bold text-emerald-800">{{ formatMoney(totalIncome()) }}</p>
+            <p class="mt-1 text-xs text-emerald-600">{{ percentChange(paidThisMonth(), paidLastMonth()) }}</p>
+          </div>
+        </article>
+        <article class="flex items-start gap-4 rounded-2xl bg-white p-5 shadow-sm">
+          <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-600">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+              <path d="M12 4a8 8 0 1 0 8 8h-2a6 6 0 1 1-6-6V4Zm1 3v5h4v-2h-2V7h-2Z" />
+            </svg>
+          </span>
+          <div>
+            <p class="text-sm text-slate-500">Pending Payments</p>
+            <p class="mt-1 text-3xl font-bold text-slate-900">{{ formatMoney(pendingPayments()) }}</p>
+            <p class="mt-1 text-xs text-red-500">{{ percentChange(pendingThisMonth(), pendingLastMonth()) }}</p>
+          </div>
+        </article>
+        <article class="flex items-start gap-4 rounded-2xl bg-white p-5 shadow-sm">
+          <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-violet-100 text-violet-600">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+              <path d="M9.2 16.2 5 12l1.4-1.4 2.8 2.8 8.4-8.4L19 6.4l-9.8 9.8Z" />
+            </svg>
+          </span>
+          <div>
+            <p class="text-sm text-slate-500">Paid This Month</p>
+            <p class="mt-1 text-3xl font-bold text-slate-900">{{ formatMoney(paidThisMonth()) }}</p>
+            <p class="mt-1 text-xs text-emerald-600">{{ percentChange(paidThisMonth(), paidLastMonth()) }}</p>
+          </div>
+        </article>
+        <article class="flex items-start gap-4 rounded-2xl bg-white p-5 shadow-sm">
+          <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-sky-100 text-sky-600">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+              <path d="M3 6h18v12H3V6Zm2 4h14V8H5v2Zm0 4h6v-2H5v2Z" />
+            </svg>
+          </span>
+          <div>
+            <p class="text-sm text-slate-500">Total Transactions</p>
+            <p class="mt-1 text-3xl font-bold text-slate-900">{{ transactionCount() }}</p>
+            <p class="mt-1 text-xs text-emerald-600">{{ percentChange(countThisMonth(), countLastMonth()) }}</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="mt-6 grid gap-4 xl:grid-cols-5">
+        <article class="rounded-2xl bg-white p-5 shadow-sm xl:col-span-3">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h2 class="font-semibold text-slate-900">Monthly Income Overview</h2>
+              <p class="text-xs text-slate-400">Your income for the last 6 months</p>
+            </div>
+            <div class="flex rounded-xl bg-slate-100 p-1 text-xs font-medium">
+              <button
+                type="button"
+                [class]="'rounded-lg px-3 py-1.5 ' + (chartType() === 'bar' ? 'bg-blue-600 text-white' : 'text-slate-500')"
+                (click)="chartType.set('bar')"
+              >
+                Bar Chart
+              </button>
+              <button
+                type="button"
+                [class]="'rounded-lg px-3 py-1.5 ' + (chartType() === 'line' ? 'bg-blue-600 text-white' : 'text-slate-500')"
+                (click)="chartType.set('line')"
+              >
+                Line Chart
+              </button>
+            </div>
+          </div>
+          <div class="mt-4 h-64">
+            <canvas
+              baseChart
+              [type]="chartType()"
+              [data]="monthlyChartData()"
+              [options]="monthlyChartOptions"
+            ></canvas>
+          </div>
+        </article>
+
+        <article class="rounded-2xl bg-white p-5 shadow-sm xl:col-span-2">
+          <h2 class="font-semibold text-slate-900">Income by Project</h2>
+          <div class="mt-4 grid items-center gap-4 sm:grid-cols-2">
+            <div class="relative mx-auto h-44 w-44">
+              <canvas
+                baseChart
+                type="doughnut"
+                [data]="projectChartData()"
+                [options]="projectChartOptions"
+              ></canvas>
+              <div class="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
+                <p class="text-sm font-bold text-slate-900">{{ formatMoney(totalIncome()) }}</p>
+                <p class="text-[10px] text-slate-400">Total Income</p>
+              </div>
+            </div>
+            <ul class="space-y-3 text-sm text-slate-600">
+              @for (slice of projectSlices(); track slice.name) {
+                <li class="flex items-center justify-between gap-3">
+                  <span class="flex items-center gap-2">
+                    <span class="h-2.5 w-2.5 rounded-full" [style.background]="slice.color"></span>
+                    {{ slice.name }}
+                  </span>
+                  <span>{{ formatMoney(slice.amount) }} · {{ slice.percent }}%</span>
+                </li>
+              } @empty {
+                <li class="text-slate-400">No paid income in this range.</li>
+              }
+            </ul>
+          </div>
+        </article>
+      </section>
+
+      <section class="mt-6 grid gap-4 xl:grid-cols-5">
+        <article class="rounded-2xl bg-white shadow-sm xl:col-span-3">
+          <div class="flex flex-col gap-3 border-b border-slate-100 p-4 sm:flex-row sm:items-center sm:justify-between">
+            <h2 class="font-semibold text-slate-900">Recent Transactions</h2>
+            <div class="flex flex-wrap items-center gap-2">
+              <select
+                class="rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-700 outline-none"
+                [value]="statusFilter()"
+                (change)="onStatus($any($event.target).value)"
+              >
+                <option value="">All Statuses</option>
+                <option value="Paid">Paid</option>
+                <option value="Pending">Pending</option>
+              </select>
+              <select
+                class="rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-700 outline-none"
+                [value]="clientFilter()"
+                (change)="onClient($any($event.target).value)"
+              >
+                <option value="">All Clients</option>
+                @for (client of clients(); track client._id) {
+                  <option [value]="client._id">{{ client.name }}</option>
+                }
+              </select>
+              @if (!showAll()) {
+                <button type="button" class="text-sm font-medium text-blue-600" (click)="showAll.set(true)">
+                  View All
+                </button>
+              }
+            </div>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="min-w-full border-collapse text-left text-sm [&_td]:border-x [&_td]:border-slate-200 [&_th]:border-x [&_th]:border-slate-200">
+              <thead class="text-xs uppercase tracking-wide text-slate-400">
+                <tr>
+                  <th class="px-4 py-3 font-medium">Date</th>
+                  <th class="px-4 py-3 font-medium">Project</th>
+                  <th class="px-4 py-3 font-medium">Client</th>
+                  <th class="px-4 py-3 font-medium">Type</th>
+                  <th class="px-4 py-3 font-medium">Amount</th>
+                  <th class="px-4 py-3 font-medium">Status</th>
+                  <th class="px-4 py-3 font-medium">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (record of recent(); track record._id) {
+                  <tr class="border-t border-slate-100">
+                    <td class="px-4 py-3 text-slate-600">{{ formatDate(record.date) }}</td>
+                    <td class="px-4 py-3 font-medium text-slate-900">{{ record.project.name }}</td>
+                    <td class="px-4 py-3 text-slate-600">{{ record.project.client.name }}</td>
+                    <td class="px-4 py-3 text-slate-600">{{ record.type }}</td>
+                    <td class="px-4 py-3 text-slate-600">{{ formatMoney(record.amount) }}</td>
+                    <td class="px-4 py-3">
+                      <span
+                        [class]="'rounded-full px-2.5 py-1 text-xs font-medium ' + (record.status === 'Paid' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700')"
+                      >
+                        {{ record.status }}
+                      </span>
+                    </td>
+                    <td class="px-4 py-3">
+                      <div class="flex items-center gap-1">
+                        <button type="button" class="rounded-lg p-1.5 text-blue-600 hover:bg-blue-50" aria-label="Edit income" (click)="openEdit(record)">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4">
+                            <path d="M4 16.5V20h3.5l10-10-3.5-3.5-10 10Zm14.7-9.2 1.1-1.1a1.5 1.5 0 0 0 0-2.1l-1.9-1.9a1.5 1.5 0 0 0-2.1 0l-1.1 1.1 4 4Z" />
+                          </svg>
+                        </button>
+                        <button type="button" class="rounded-lg p-1.5 text-emerald-600 hover:bg-emerald-50" aria-label="View income" (click)="openView(record)">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4">
+                            <path d="M12 5c5.5 0 9.5 4.4 10.8 6.1.3.4.3 1 0 1.4C21.5 14.2 17.5 19 12 19S2.5 14.2 1.2 12.5c-.3-.4-.3-1 0-1.4C2.5 9.4 6.5 5 12 5Zm0 2C8.1 7 5 10.2 3.6 12 5 13.8 8.1 17 12 17s7-3.2 8.4-5C19 10.2 15.9 7 12 7Zm0 2.2A2.8 2.8 0 1 1 9.2 12 2.8 2.8 0 0 1 12 9.2Z" />
+                          </svg>
+                        </button>
+                        <button type="button" class="rounded-lg p-1.5 text-red-500 hover:bg-red-50" aria-label="Delete income" (click)="askDelete(record)">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4">
+                            <path d="M9 3h6l1 2h4v2H4V5h4l1-2Zm-3 6h12l-1 12H7L6 9Zm3 2v8h2v-8H9Zm4 0v8h2v-8h-2Z" />
+                          </svg>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                } @empty {
+                  <tr>
+                    <td colspan="7" class="px-4 py-10 text-center text-slate-500">No income records yet.</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <div class="space-y-4 xl:col-span-2">
+          <article class="rounded-2xl bg-white p-5 shadow-sm">
+            <h2 class="font-semibold text-slate-900">Quick Actions</h2>
+            <div class="mt-4 space-y-3">
+              <button
+                type="button"
+                class="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-medium text-white"
+                (click)="openCreate()"
+              >
+                + Add Income
+              </button>
+              <a
+                routerLink="/reports"
+                class="flex w-full items-center justify-center gap-2 rounded-xl bg-violet-600 px-4 py-2.5 text-sm font-medium text-white"
+              >
+                View Reports
+              </a>
+              <button
+                type="button"
+                class="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-medium text-white"
+                (click)="toggleExport()"
+              >
+                Export CSV / PDF
+              </button>
+              @if (exportOpen()) {
+                <div class="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    class="rounded-xl bg-emerald-100 px-3 py-2 text-sm font-medium text-emerald-700"
+                    (click)="exportCsv()"
+                  >
+                    CSV
+                  </button>
+                  <button
+                    type="button"
+                    class="rounded-xl bg-amber-100 px-3 py-2 text-sm font-medium text-amber-700"
+                    (click)="exportPdf()"
+                  >
+                    PDF
+                  </button>
+                </div>
+              }
+            </div>
+          </article>
+          <article class="rounded-2xl bg-blue-50 p-5 shadow-sm">
+            <h2 class="font-semibold text-slate-900">Keep going!</h2>
+            <p class="mt-1 text-sm text-slate-500">Your hard work is paying off.</p>
+          </article>
+        </div>
+      </section>
+
+      @if (formOpen()) {
+        <div class="fixed inset-0 z-40 bg-slate-900/40" (click)="closeForm()"></div>
+        <aside class="fixed inset-y-0 right-0 z-50 flex w-full max-w-md flex-col bg-white shadow-xl">
+          <div class="flex items-center justify-between border-b border-slate-100 px-5 py-4">
+            <h2 class="text-lg font-semibold text-slate-900">
+              {{ editingId() ? 'Edit Income' : 'Add Income' }}
+            </h2>
+            <button
+              type="button"
+              class="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100"
+              aria-label="Close"
+              (click)="closeForm()"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+                <path d="M6.4 5 12 10.6 17.6 5 19 6.4 13.4 12 19 17.6 17.6 19 12 13.4 6.4 19 5 17.6 10.6 12 5 6.4Z" />
+              </svg>
+            </button>
+          </div>
+          <form class="flex flex-1 flex-col gap-4 overflow-y-auto p-5" [formGroup]="form" (ngSubmit)="saveIncome()">
+            <label class="block text-sm text-slate-600">
+              Project
+              <select
+                formControlName="project"
+                class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm text-slate-700 outline-none focus:border-blue-500"
+              >
+                <option value="">Choose a project</option>
+                @for (project of projects(); track project._id) {
+                  <option [value]="project._id">{{ project.name }}</option>
+                }
+              </select>
+              @if (form.controls.project.touched && form.controls.project.invalid) {
+                <p class="mt-1 text-sm text-red-500">Choose a project.</p>
+              }
+            </label>
+            <label class="block text-sm text-slate-600">
+              Type
+              <select
+                formControlName="type"
+                class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm text-slate-700 outline-none focus:border-blue-500"
+              >
+                <option value="Payment">Payment</option>
+                <option value="Invoice">Invoice</option>
+              </select>
+            </label>
+            <label class="block text-sm text-slate-600">
+              Amount
+              <input
+                type="number"
+                min="0"
+                formControlName="amount"
+                class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm text-slate-900 outline-none focus:border-blue-500"
+              />
+              @if (form.controls.amount.touched && form.controls.amount.invalid) {
+                <p class="mt-1 text-sm text-red-500">Enter an amount of 0 or more.</p>
+              }
+            </label>
+            <label class="block text-sm text-slate-600">
+              Status
+              <select
+                formControlName="status"
+                class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm text-slate-700 outline-none focus:border-blue-500"
+              >
+                <option value="Paid">Paid</option>
+                <option value="Pending">Pending</option>
+              </select>
+            </label>
+            <label class="block text-sm text-slate-600">
+              Date
+              <input
+                type="date"
+                formControlName="date"
+                class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm text-slate-900 outline-none focus:border-blue-500"
+              />
+              @if (form.controls.date.touched && form.controls.date.invalid) {
+                <p class="mt-1 text-sm text-red-500">Date is required.</p>
+              }
+            </label>
+            @if (errorMessage()) {
+              <p class="text-sm text-red-500">{{ errorMessage() }}</p>
+            }
+            <div class="mt-auto flex items-center gap-2 pt-2">
+              <button
+                type="button"
+                class="rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-medium text-slate-700"
+                (click)="closeForm()"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-medium text-white"
+              >
+                Save Income
+              </button>
+            </div>
+          </form>
+        </aside>
+      }
+
+      @if (incomeToView(); as record) {
+        <div class="fixed inset-0 z-40 bg-slate-900/40" (click)="closeView()"></div>
+        <aside class="fixed inset-y-0 right-0 z-50 flex w-full max-w-md flex-col bg-white shadow-xl">
+          <div class="flex items-center justify-between border-b border-slate-100 px-5 py-4">
+            <h2 class="text-lg font-semibold text-slate-900">View Income</h2>
+            <button
+              type="button"
+              class="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100"
+              aria-label="Close"
+              (click)="closeView()"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+                <path d="M6.4 5 12 10.6 17.6 5 19 6.4 13.4 12 19 17.6 17.6 19 12 13.4 6.4 19 5 17.6 10.6 12 5 6.4Z" />
+              </svg>
+            </button>
+          </div>
+          <dl class="space-y-4 overflow-y-auto p-5 text-sm">
+            <div>
+              <dt class="text-slate-500">Project</dt>
+              <dd class="mt-1 font-medium text-slate-900">{{ record.project.name }}</dd>
+            </div>
+            <div>
+              <dt class="text-slate-500">Client</dt>
+              <dd class="mt-1 font-medium text-slate-900">{{ record.project.client.name }}</dd>
+            </div>
+            <div>
+              <dt class="text-slate-500">Type</dt>
+              <dd class="mt-1 font-medium text-slate-900">{{ record.type }}</dd>
+            </div>
+            <div>
+              <dt class="text-slate-500">Amount</dt>
+              <dd class="mt-1 font-medium text-slate-900">{{ formatMoney(record.amount) }}</dd>
+            </div>
+            <div>
+              <dt class="text-slate-500">Status</dt>
+              <dd class="mt-1 font-medium text-slate-900">{{ record.status }}</dd>
+            </div>
+            <div>
+              <dt class="text-slate-500">Date</dt>
+              <dd class="mt-1 font-medium text-slate-900">{{ formatDate(record.date) }}</dd>
+            </div>
+          </dl>
+          <div class="mt-auto p-5">
+            <button
+              type="button"
+              class="rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-medium text-slate-700"
+              (click)="closeView()"
+            >
+              Close
+            </button>
+          </div>
+        </aside>
+      }
+
+      @if (incomeToDelete(); as record) {
+        <div class="fixed inset-0 z-40 bg-slate-900/40" (click)="cancelDelete()"></div>
+        <section class="fixed inset-x-0 top-0 z-50 mx-auto mt-6 w-[calc(100%-2rem)] max-w-lg rounded-2xl border border-red-100 bg-white p-5 shadow-xl">
+          <h2 class="text-lg font-semibold text-slate-900">Delete income</h2>
+          <p class="mt-2 text-sm text-slate-600">Delete {{ record.project.name }}? This cannot be undone.</p>
+          <div class="mt-4 flex items-center gap-2">
+            <button
+              type="button"
+              class="rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-medium text-slate-700"
+              (click)="cancelDelete()"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              class="rounded-xl bg-red-600 px-4 py-2.5 text-sm font-medium text-white"
+              (click)="confirmDelete()"
+            >
+              Delete
+            </button>
+          </div>
+        </section>
+      }
     </main>
   </div>
 </div>
