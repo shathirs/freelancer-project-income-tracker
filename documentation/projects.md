@@ -124,7 +124,7 @@ Search, client, and status change only the table. The table columns are Project 
 
 Status colors: **In Progress** and **Completed** are green. **On Hold** is purple. An empty end date shows **Ongoing**. A fee note is shown after the amount.
 
-The action icons are edit (blue), view (green), and delete (red). The view icon is not wired yet.
+The action icons are edit (blue), view (green), and delete (red). The view icon opens a read-only panel for that project.
 
 **Add Project** and the edit icon open a panel from the right. Name, client, start date, and fee are required. Fee must be `0` or greater. Save calls create or update, then reloads the list. Cancel, the close icon, or a click on the dimmed area closes the panel.
 

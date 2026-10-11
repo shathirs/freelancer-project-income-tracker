@@ -29,6 +29,7 @@ export class Projects {
   readonly editingId = signal<string | null>(null);
   readonly errorMessage = signal('');
   readonly projectToDelete = signal<Project | null>(null);
+  readonly projectToView = signal<Project | null>(null);
 
   readonly form = this.formBuilder.nonNullable.group({
     name: ['', Validators.required],
@@ -211,6 +212,14 @@ export class Projects {
     this.formOpen.set(false);
     this.editingId.set(null);
     this.errorMessage.set('');
+  }
+
+  openView(project: Project): void {
+    this.projectToView.set(project);
+  }
+
+  closeView(): void {
+    this.projectToView.set(null);
   }
 
   saveProject(): void {
