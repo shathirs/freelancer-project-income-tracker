@@ -127,7 +127,7 @@ The page uses the shared sidebar and navbar. It shows four cards from the full c
 
 Search, status, and sort change only the table. The table columns are Name, Email, Company, Phone, Status, Projects, Total Earned, and Actions. Empty company or phone shows an em dash. The table has a vertical line between columns. Four clients are shown per page.
 
-The action icons are edit (blue), view (green), and delete (red). The view icon is not wired yet.
+The action icons are edit (blue), view (green), and delete (red). The view icon opens a read-only panel for that client.
 
 **Add Client** and the edit icon open a panel from the right. Name is required. Email is required and must be a valid address. Save calls create or update, then reloads the list. Cancel, the close icon, or a click on the dimmed area closes the panel.
 

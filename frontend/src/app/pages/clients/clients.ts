@@ -27,6 +27,7 @@ export class Clients {
   readonly formOpen = signal(false);
   readonly editingId = signal<string | null>(null);
   readonly clientToDelete = signal<Client | null>(null);
+  readonly clientToView = signal<Client | null>(null);
   readonly errorMessage = signal('');
 
   readonly form = this.formBuilder.nonNullable.group({
@@ -179,6 +180,14 @@ export class Clients {
     this.formOpen.set(false);
     this.editingId.set(null);
     this.errorMessage.set('');
+  }
+
+  openView(client: Client): void {
+    this.clientToView.set(client);
+  }
+
+  closeView(): void {
+    this.clientToView.set(null);
   }
 
   saveClient(): void {
