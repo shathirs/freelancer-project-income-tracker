@@ -8,7 +8,6 @@ The sidebar is the dark navigation panel shared by the signed-in pages. It is th
 |------|------|
 | `frontend/src/app/layout/sidebar/sidebar.ts` | Logout action and router imports |
 | `frontend/src/app/layout/sidebar/sidebar.html` | Logo, links, icons, and logout button |
-| `frontend/src/app/layout/sidebar/sidebar.css` | Empty stylesheet |
 
 Selector: `app-sidebar`.
 

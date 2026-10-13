@@ -8,7 +8,6 @@ The navbar is the white top bar shared by the signed-in pages. It is the `app-na
 |------|------|
 | `frontend/src/app/layout/navbar/navbar.ts` | Reads the logged-in user, loads their profile, and loads the unread notification count |
 | `frontend/src/app/layout/navbar/navbar.html` | Search field, notification bell, profile icon, and name |
-| `frontend/src/app/layout/navbar/navbar.css` | Empty stylesheet |
 | `frontend/src/app/core/auth.service.ts` | Stores the user and calls `GET /api/auth/me` |
 | `frontend/src/app/core/notification.service.ts` | Loads notifications for the bell badge |
 

@@ -7,7 +7,6 @@ import { Sidebar } from '../../layout/sidebar/sidebar';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.html',
-  styleUrl: './dashboard.css',
   imports: [Sidebar, Navbar, BaseChartDirective],
 })
 export class Dashboard {

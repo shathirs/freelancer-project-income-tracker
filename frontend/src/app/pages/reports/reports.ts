@@ -10,7 +10,6 @@ import { Project, ProjectService } from '../../core/project.service';
   selector: 'app-reports',
   imports: [Sidebar, Navbar, BaseChartDirective],
   templateUrl: './reports.html',
-  styleUrl: './reports.css',
 })
 export class Reports {
   private readonly incomeService = inject(IncomeService);

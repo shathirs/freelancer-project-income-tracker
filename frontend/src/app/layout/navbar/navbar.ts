@@ -8,7 +8,6 @@ import { NotificationService } from '../../core/notification.service';
   selector: 'app-navbar',
   imports: [RouterLink],
   templateUrl: './navbar.html',
-  styleUrl: './navbar.css',
 })
 export class Navbar {
   private readonly router = inject(Router);

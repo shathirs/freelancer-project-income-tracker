@@ -6,7 +6,6 @@ import { AuthService } from './core/auth.service';
   selector: 'app-root',
   imports: [RouterOutlet],
   templateUrl: './app.html',
-  styleUrl: './app.css'
 })
 export class App {
   constructor() {

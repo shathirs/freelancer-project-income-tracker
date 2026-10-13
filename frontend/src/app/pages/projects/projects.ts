@@ -10,7 +10,6 @@ import { Project, ProjectService } from '../../core/project.service';
   selector: 'app-projects',
   imports: [Sidebar, Navbar, ReactiveFormsModule],
   templateUrl: './projects.html',
-  styleUrl: './projects.css',
 })
 export class Projects {
   private readonly projectService = inject(ProjectService);

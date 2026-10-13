@@ -18,7 +18,6 @@ A visitor without a saved JWT is sent to `/login`.
 |------|------|
 | `frontend/src/app/pages/dashboard/dashboard.ts` | Chart data and component imports |
 | `frontend/src/app/pages/dashboard/dashboard.html` | Page layout and sample content |
-| `frontend/src/app/pages/dashboard/dashboard.css` | Empty stylesheet |
 | `frontend/src/app/app.config.ts` | Registers Chart.js through `provideCharts` |
 
 The page uses the shared sidebar and navbar:

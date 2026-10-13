@@ -14,7 +14,6 @@ import { Project, ProjectService } from '../../core/project.service';
   selector: 'app-income',
   imports: [Sidebar, Navbar, BaseChartDirective, RouterLink, ReactiveFormsModule],
   templateUrl: './income.html',
-  styleUrl: './income.css',
 })
 export class Income {
   private readonly incomeService = inject(IncomeService);

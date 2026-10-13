@@ -25,7 +25,6 @@ function passwordsMatch(control: AbstractControl): ValidationErrors | null {
   selector: 'app-register',
   imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './register.html',
-  styleUrl: './register.css',
 })
 export class Register {
   private readonly formBuilder = inject(FormBuilder);

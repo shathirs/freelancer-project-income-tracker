@@ -10,7 +10,6 @@ type SettingsSection = 'account' | 'security' | 'notifications' | 'preferences' 
   selector: 'app-settings',
   imports: [Sidebar, Navbar],
   templateUrl: './settings.html',
-  styleUrl: './settings.css',
 })
 export class Settings {
   private readonly auth = inject(AuthService);
