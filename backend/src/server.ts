@@ -5,6 +5,7 @@ import authRoutes from './routes/auth.routes.js';
 import clientRoutes from './routes/client.routes.js';
 import projectRoutes from './routes/project.routes.js';
 import incomeRoutes from './routes/income.routes.js';
+import notificationRoutes from './routes/notification.routes.js';
 import { connectDB } from './config/db.js';
 
 const app = express();
@@ -15,6 +16,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/clients', clientRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/income', incomeRoutes);
+app.use('/api/notifications', notificationRoutes);
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', message: 'Freelancer Tracker API running' });
 });

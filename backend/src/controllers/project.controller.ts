@@ -2,6 +2,7 @@ import type { Response } from 'express';
 import { Client } from '../models/client.model.js';
 import { Project } from '../models/project.model.js';
 import type { AuthRequest } from '../middleware/auth.middleware.js';
+import { createNotification } from '../utils/notify.js';
 
 type ProjectStatus = 'In Progress' | 'Completed' | 'On Hold';
 
@@ -109,6 +110,12 @@ export async function updateProject(req: AuthRequest, res: Response): Promise<vo
     return;
   }
 
+  const existing = await Project.findOne({ _id: req.params['id'], user: req.userId });
+  if (!existing) {
+    res.status(404).json({ message: 'Project not found' });
+    return;
+  }
+
   const project = await Project.findOneAndUpdate(
     { _id: req.params['id'], user: req.userId },
     data,
@@ -118,6 +125,15 @@ export async function updateProject(req: AuthRequest, res: Response): Promise<vo
   if (!project) {
     res.status(404).json({ message: 'Project not found' });
     return;
+  }
+
+  if (req.userId && existing.status !== data.status) {
+    await createNotification(
+      req.userId,
+      'project',
+      'Project update',
+      `${data.name} is now ${data.status}.`,
+    );
   }
 
   res.json({ project });

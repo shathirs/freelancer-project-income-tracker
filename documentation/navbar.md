@@ -6,10 +6,11 @@ The navbar is the white top bar shared by the signed-in pages. It is the `app-na
 
 | File | Role |
 |------|------|
-| `frontend/src/app/layout/navbar/navbar.ts` | Reads the logged-in user and loads their profile |
-| `frontend/src/app/layout/navbar/navbar.html` | Search field, notification icon, profile icon, and name |
+| `frontend/src/app/layout/navbar/navbar.ts` | Reads the logged-in user, loads their profile, and loads the unread notification count |
+| `frontend/src/app/layout/navbar/navbar.html` | Search field, notification bell, profile icon, and name |
 | `frontend/src/app/layout/navbar/navbar.css` | Empty stylesheet |
 | `frontend/src/app/core/auth.service.ts` | Stores the user and calls `GET /api/auth/me` |
+| `frontend/src/app/core/notification.service.ts` | Loads notifications for the bell badge |
 
 Selector: `app-navbar`.
 
@@ -18,7 +19,7 @@ Selector: `app-navbar`.
 From left to right:
 
 1. A search box with the placeholder “Search projects, clients...”. It does not filter data yet.
-2. A notification bell. The button has no menu yet.
+2. A notification bell. It opens `/notifications`. A red badge shows the unread count, up to `9+`. Details are in `documentation/notifications.md`.
 3. A blue profile icon.
 4. The name of the freelancer who is logged in.
 
@@ -47,4 +48,4 @@ Import `Navbar` from `frontend/src/app/layout/navbar/navbar` and add it to the c
 </div>
 ```
 
-These pages already include it: Dashboard, Clients, Projects, Income, Reports, and Settings. Login and registration do not.
+These pages already include it: Dashboard, Clients, Projects, Income, Reports, Notifications, and Settings. Login and registration do not.

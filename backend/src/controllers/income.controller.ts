@@ -2,6 +2,7 @@ import type { Response } from 'express';
 import { Income } from '../models/income.model.js';
 import { Project } from '../models/project.model.js';
 import type { AuthRequest } from '../middleware/auth.middleware.js';
+import { createNotification } from '../utils/notify.js';
 
 type IncomeType = 'Payment' | 'Invoice';
 type IncomeStatus = 'Paid' | 'Pending';
@@ -115,6 +116,16 @@ export async function createIncome(req: AuthRequest, res: Response): Promise<voi
   const { date, ...rest } = data;
   const created = await Income.create({ ...rest, date, user: req.userId });
   const saved = await Income.findById(created._id).populate(projectPopulate);
+
+  if (data.status === 'Paid') {
+    await createNotification(
+      req.userId,
+      'payment',
+      'Payment received',
+      `${project.name} was paid $${data.amount}.`,
+    );
+  }
+
   res.status(201).json({ income: saved });
 }
 
@@ -131,6 +142,12 @@ export async function updateIncome(req: AuthRequest, res: Response): Promise<voi
     return;
   }
 
+  const existing = await Income.findOne({ _id: req.params['id'], user: req.userId });
+  if (!existing) {
+    res.status(404).json({ message: 'Income record not found' });
+    return;
+  }
+
   const { date, ...rest } = data;
   const record = await Income.findOneAndUpdate(
     { _id: req.params['id'], user: req.userId },
@@ -141,6 +158,15 @@ export async function updateIncome(req: AuthRequest, res: Response): Promise<voi
   if (!record) {
     res.status(404).json({ message: 'Income record not found' });
     return;
+  }
+
+  if (req.userId && data.status === 'Paid' && existing.status !== 'Paid') {
+    await createNotification(
+      req.userId,
+      'payment',
+      'Payment received',
+      `${project.name} was paid $${data.amount}.`,
+    );
   }
 
   res.json({ income: record });
