@@ -6,33 +6,33 @@
 
     <main class="p-6">
       <div>
-        <h1 class="text-2xl font-bold text-slate-900">Good morning, Shathir!</h1>
+        <h1 class="text-2xl font-bold text-slate-900">{{ greeting() }}</h1>
         <p class="mt-1 text-sm text-slate-500">Here's a quick overview of your freelance journey.</p>
       </div>
-      
+
       <section class="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <article class="rounded-2xl bg-white p-5 shadow-sm">
           <p class="text-sm text-slate-500">Total Projects</p>
-          <p class="mt-2 text-3xl font-bold text-slate-900">5</p>
-          <p class="mt-2 text-xs text-emerald-600">2 more than last month</p>
+          <p class="mt-2 text-3xl font-bold text-slate-900">{{ projectCount() }}</p>
+          <p class="mt-2 text-xs text-emerald-600">{{ projectChange() }}</p>
         </article>
-      
+
         <article class="rounded-2xl bg-white p-5 shadow-sm">
           <p class="text-sm text-slate-500">Total Clients</p>
-          <p class="mt-2 text-3xl font-bold text-slate-900">4</p>
-          <p class="mt-2 text-xs text-emerald-600">1 more than last month</p>
+          <p class="mt-2 text-3xl font-bold text-slate-900">{{ clientCount() }}</p>
+          <p class="mt-2 text-xs text-emerald-600">{{ clientChange() }}</p>
         </article>
-      
+
         <article class="rounded-2xl bg-white p-5 shadow-sm">
           <p class="text-sm text-slate-500">Total Income</p>
-          <p class="mt-2 text-3xl font-bold text-slate-900">$4,250</p>
-          <p class="mt-2 text-xs text-emerald-600">12% than last month</p>
+          <p class="mt-2 text-3xl font-bold text-slate-900">{{ formatMoney(totalIncome()) }}</p>
+          <p class="mt-2 text-xs text-emerald-600">{{ incomeChange() }}</p>
         </article>
-      
+
         <article class="rounded-2xl bg-white p-5 shadow-sm">
           <p class="text-sm text-slate-500">Pending Payments</p>
-          <p class="mt-2 text-3xl font-bold text-slate-900">$1,200</p>
-          <p class="mt-2 text-xs text-red-500">8% than last month</p>
+          <p class="mt-2 text-3xl font-bold text-slate-900">{{ formatMoney(pendingPayments()) }}</p>
+          <p class="mt-2 text-xs text-red-500">{{ pendingChange() }}</p>
         </article>
       </section>
 
@@ -46,7 +46,7 @@
             <canvas
               baseChart
               type="bar"
-              [data]="incomeChartData"
+              [data]="incomeChartData()"
               [options]="incomeChartOptions"
             ></canvas>
           </div>
@@ -59,23 +59,17 @@
               <canvas
                 baseChart
                 type="doughnut"
-                [data]="statusChartData"
+                [data]="statusChartData()"
                 [options]="statusChartOptions"
               ></canvas>
             </div>
             <ul class="space-y-3 text-sm text-slate-600">
-              <li class="flex items-center justify-between gap-3">
-                <span class="text-emerald-600">Completed</span>
-                <span>2 · 40%</span>
-              </li>
-              <li class="flex items-center justify-between gap-3">
-                <span class="text-blue-600">In Progress</span>
-                <span>2 · 40%</span>
-              </li>
-              <li class="flex items-center justify-between gap-3">
-                <span class="text-amber-600">On Hold</span>
-                <span>1 · 20%</span>
-              </li>
+              @for (slice of statusSlices(); track slice.label) {
+                <li class="flex items-center justify-between gap-3">
+                  <span [class]="slice.color">{{ slice.label }}</span>
+                  <span>{{ slice.count }} · {{ slice.percent }}%</span>
+                </li>
+              }
             </ul>
           </div>
         </article>
@@ -85,7 +79,7 @@
         <article class="overflow-hidden rounded-2xl bg-white shadow-sm">
           <div class="flex items-center justify-between px-5 py-4">
             <h2 class="font-semibold text-slate-900">Recent Projects</h2>
-            <span class="text-sm font-medium text-blue-600">View All</span>
+            <a routerLink="/projects" class="text-sm font-medium text-blue-600">View All</a>
           </div>
           <div class="overflow-x-auto">
             <table class="w-full text-left text-sm">
@@ -99,41 +93,21 @@
                 </tr>
               </thead>
               <tbody class="text-slate-700">
-                <tr class="border-t border-slate-100">
-                  <td class="px-5 py-3">Website Redesign</td>
-                  <td class="px-5 py-3">ABC Solutions</td>
-                  <td class="px-5 py-3"><span class="rounded-full bg-blue-50 px-2 py-1 text-xs text-blue-600">In Progress</span></td>
-                  <td class="px-5 py-3">$1,200</td>
-                  <td class="px-5 py-3">Oct 15, 2026</td>
-                </tr>
-                <tr class="border-t border-slate-100">
-                  <td class="px-5 py-3">Mobile App Development</td>
-                  <td class="px-5 py-3">Skyline Ltd.</td>
-                  <td class="px-5 py-3"><span class="rounded-full bg-emerald-50 px-2 py-1 text-xs text-emerald-600">Completed</span></td>
-                  <td class="px-5 py-3">$2,000</td>
-                  <td class="px-5 py-3">Sep 30, 2026</td>
-                </tr>
-                <tr class="border-t border-slate-100">
-                  <td class="px-5 py-3">E-commerce Website</td>
-                  <td class="px-5 py-3">Bright Future</td>
-                  <td class="px-5 py-3"><span class="rounded-full bg-blue-50 px-2 py-1 text-xs text-blue-600">In Progress</span></td>
-                  <td class="px-5 py-3">$1,500</td>
-                  <td class="px-5 py-3">Nov 05, 2026</td>
-                </tr>
-                <tr class="border-t border-slate-100">
-                  <td class="px-5 py-3">UI/UX Design</td>
-                  <td class="px-5 py-3">Creative Hub</td>
-                  <td class="px-5 py-3"><span class="rounded-full bg-amber-50 px-2 py-1 text-xs text-amber-600">On Hold</span></td>
-                  <td class="px-5 py-3">$800</td>
-                  <td class="px-5 py-3">Oct 25, 2026</td>
-                </tr>
-                <tr class="border-t border-slate-100">
-                  <td class="px-5 py-3">Landing Page</td>
-                  <td class="px-5 py-3">NextGen</td>
-                  <td class="px-5 py-3"><span class="rounded-full bg-emerald-50 px-2 py-1 text-xs text-emerald-600">Completed</span></td>
-                  <td class="px-5 py-3">$750</td>
-                  <td class="px-5 py-3">Sep 20, 2026</td>
-                </tr>
+                @for (project of recentProjects(); track project._id) {
+                  <tr class="border-t border-slate-100">
+                    <td class="px-5 py-3">{{ project.name }}</td>
+                    <td class="px-5 py-3">{{ project.client.name }}</td>
+                    <td class="px-5 py-3">
+                      <span [class]="'rounded-full px-2 py-1 text-xs ' + statusClass(project.status)">{{ project.status }}</span>
+                    </td>
+                    <td class="px-5 py-3">{{ formatMoney(project.fee) }}</td>
+                    <td class="px-5 py-3">{{ formatDate(project.endDate) }}</td>
+                  </tr>
+                } @empty {
+                  <tr>
+                    <td colspan="5" class="px-5 py-8 text-center text-slate-500">No projects yet.</td>
+                  </tr>
+                }
               </tbody>
             </table>
           </div>
@@ -142,7 +116,7 @@
         <article class="overflow-hidden rounded-2xl bg-white shadow-sm">
           <div class="flex items-center justify-between px-5 py-4">
             <h2 class="font-semibold text-slate-900">Recent Income</h2>
-            <span class="text-sm font-medium text-blue-600">View All</span>
+            <a routerLink="/income" class="text-sm font-medium text-blue-600">View All</a>
           </div>
           <div class="overflow-x-auto">
             <table class="w-full text-left text-sm">
@@ -156,41 +130,25 @@
                 </tr>
               </thead>
               <tbody class="text-slate-700">
-                <tr class="border-t border-slate-100">
-                  <td class="px-5 py-3">Oct 20, 2026</td>
-                  <td class="px-5 py-3">Website Redesign</td>
-                  <td class="px-5 py-3">ABC Solutions</td>
-                  <td class="px-5 py-3">$600</td>
-                  <td class="px-5 py-3"><span class="rounded-full bg-emerald-50 px-2 py-1 text-xs text-emerald-600">Paid</span></td>
-                </tr>
-                <tr class="border-t border-slate-100">
-                  <td class="px-5 py-3">Oct 12, 2026</td>
-                  <td class="px-5 py-3">Mobile App Development</td>
-                  <td class="px-5 py-3">Skyline Ltd.</td>
-                  <td class="px-5 py-3">$1,000</td>
-                  <td class="px-5 py-3"><span class="rounded-full bg-emerald-50 px-2 py-1 text-xs text-emerald-600">Paid</span></td>
-                </tr>
-                <tr class="border-t border-slate-100">
-                  <td class="px-5 py-3">Oct 05, 2026</td>
-                  <td class="px-5 py-3">Landing Page</td>
-                  <td class="px-5 py-3">NextGen</td>
-                  <td class="px-5 py-3">$750</td>
-                  <td class="px-5 py-3"><span class="rounded-full bg-emerald-50 px-2 py-1 text-xs text-emerald-600">Paid</span></td>
-                </tr>
-                <tr class="border-t border-slate-100">
-                  <td class="px-5 py-3">Sep 28, 2026</td>
-                  <td class="px-5 py-3">UI/UX Design</td>
-                  <td class="px-5 py-3">Creative Hub</td>
-                  <td class="px-5 py-3">$400</td>
-                  <td class="px-5 py-3"><span class="rounded-full bg-amber-50 px-2 py-1 text-xs text-amber-600">Pending</span></td>
-                </tr>
-                <tr class="border-t border-slate-100">
-                  <td class="px-5 py-3">Sep 15, 2026</td>
-                  <td class="px-5 py-3">E-commerce Website</td>
-                  <td class="px-5 py-3">Bright Future</td>
-                  <td class="px-5 py-3">$800</td>
-                  <td class="px-5 py-3"><span class="rounded-full bg-emerald-50 px-2 py-1 text-xs text-emerald-600">Paid</span></td>
-                </tr>
+                @for (record of recentIncome(); track record._id) {
+                  <tr class="border-t border-slate-100">
+                    <td class="px-5 py-3">{{ formatDate(record.date) }}</td>
+                    <td class="px-5 py-3">{{ record.project.name }}</td>
+                    <td class="px-5 py-3">{{ record.project.client.name }}</td>
+                    <td class="px-5 py-3">{{ formatMoney(record.amount) }}</td>
+                    <td class="px-5 py-3">
+                      <span
+                        [class]="'rounded-full px-2 py-1 text-xs ' + (record.status === 'Paid' ? 'bg-emerald-50 text-emerald-600' : 'bg-amber-50 text-amber-600')"
+                      >
+                        {{ record.status }}
+                      </span>
+                    </td>
+                  </tr>
+                } @empty {
+                  <tr>
+                    <td colspan="5" class="px-5 py-8 text-center text-slate-500">No income records yet.</td>
+                  </tr>
+                }
               </tbody>
             </table>
           </div>

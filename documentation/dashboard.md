@@ -2,7 +2,7 @@
 
 The dashboard is the freelancer’s home page after login. It shows a summary of projects, clients, income, and payments, plus charts and recent lists.
 
-The numbers on this page are sample data from the design. They are not loaded from MongoDB yet.
+The numbers come from the logged-in freelancer’s clients, projects, and income records.
 
 ## Route
 
@@ -16,8 +16,11 @@ A visitor without a saved JWT is sent to `/login`.
 
 | File | Role |
 |------|------|
-| `frontend/src/app/pages/dashboard/dashboard.ts` | Chart data and component imports |
-| `frontend/src/app/pages/dashboard/dashboard.html` | Page layout and sample content |
+| `frontend/src/app/pages/dashboard/dashboard.ts` | Loads the freelancer’s clients, projects, and income for the cards, charts, and tables |
+| `frontend/src/app/pages/dashboard/dashboard.html` | Page layout |
+| `frontend/src/app/core/client.service.ts` | Client list |
+| `frontend/src/app/core/project.service.ts` | Project list |
+| `frontend/src/app/core/income.service.ts` | Income list |
 | `frontend/src/app/app.config.ts` | Registers Chart.js through `provideCharts` |
 
 The page uses the shared sidebar and navbar:
@@ -38,29 +41,22 @@ The page uses the shared sidebar and navbar:
 
 ## What the page shows
 
-1. Greeting: “Good morning, Shathir!” and a short overview line. This greeting is still fixed text. It does not use the logged-in user’s name.
-2. Four summary cards:
-   - Total Projects: 5
-   - Total Clients: 4
-   - Total Income: $4,250
-   - Pending Payments: $1,200
-3. **Monthly income** bar chart for April through October.
-4. **Project Status** donut chart: Completed 2, In Progress 2, On Hold 1.
-5. **Recent Projects** table: name, client, status, fee, and due date.
-6. **Recent Income** table: date, project, client, amount, and Paid or Pending.
-
-**View All** on both tables is a label only. It does not open another page yet.
+1. Greeting: “Good morning”, “Good afternoon”, or “Good evening”, followed by the logged-in freelancer’s name.
+2. Four summary cards. The line under each card compares this calendar month with last month.
+   - Total Projects: every project. The comparison counts projects whose start date falls in each month.
+   - Total Clients: every client. The comparison counts clients created in each month.
+   - Total Income: the sum of **Paid** income. The comparison uses paid amounts in each month.
+   - Pending Payments: the sum of **Pending** income. The comparison uses pending amounts in each month.
+3. **Monthly income** is a bar chart of paid amounts for the last seven months, including the current month.
+4. **Project Status** is a doughnut of Completed, In Progress, and On Hold counts.
+5. **Recent Projects** shows the five newest projects: name, client, status, fee, and due date. A project with no end date shows Ongoing. **View All** opens `/projects`.
+6. **Recent Income** shows the five newest income records: date, project, client, amount, and Paid or Pending. **View All** opens `/income`.
 
 ## Charts
 
 Charts use Chart.js through `ng2-charts` version 10, which matches Angular 21.
 
-`dashboard.ts` defines:
-
-- `incomeChartData` and `incomeChartOptions` for the bar chart
-- `statusChartData` and `statusChartOptions` for the doughnut chart
-
-The templates bind those values with the `baseChart` directive.
+`dashboard.ts` builds `incomeChartData` and `statusChartData` from those records. The templates bind those values with the `baseChart` directive.
 
 ## Layout
 
