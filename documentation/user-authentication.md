@@ -22,6 +22,10 @@ Collection: `users`
 | `name` | Required, trimmed |
 | `email` | Required, unique, stored in lowercase |
 | `password` | Required, at least 6 characters, stored as a bcrypt hash, excluded from normal queries |
+| `phone` | Optional text. Defaults to an empty string |
+| `notifications` | Four switches. Project updates, payment received, and client messages default to on. Marketing defaults to off |
+| `theme` | `light`, `dark`, or `system`. Defaults to `light` |
+| `language` | Defaults to `English` |
 | `createdAt` | Added automatically |
 | `updatedAt` | Added automatically |
 
@@ -36,6 +40,11 @@ Base path: `http://localhost:5000/api/auth`
 | `POST` | `/register` | Public | Create an account and return a token |
 | `POST` | `/login` | Public | Check email and password, then return a token |
 | `GET` | `/me` | JWT required | Return the logged-in user |
+| `PUT` | `/profile` | JWT required | Update name, email, and phone |
+| `PUT` | `/password` | JWT required | Change the password |
+| `PUT` | `/preferences` | JWT required | Save notifications, theme, and language |
+
+Profile, password, and preference details are in `documentation/settings.md`.
 
 ### Register
 

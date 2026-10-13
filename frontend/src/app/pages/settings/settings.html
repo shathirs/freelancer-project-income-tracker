@@ -3,7 +3,272 @@
   <div class="min-w-0 flex-1 lg:pl-64">
     <app-navbar />
     <main class="p-6">
-      <h1 class="text-2xl font-bold text-slate-900">Settings</h1>
+      <div class="flex items-start gap-3">
+        <span class="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 text-blue-600">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+            <path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm8.2 3.1-.9-.5a7.7 7.7 0 0 0-.4-1l.5-.9a1 1 0 0 0-.2-1.2l-.7-.7a1 1 0 0 0-1.2-.2l-.9.5a7.7 7.7 0 0 0-1-.4l-.5-.9a1 1 0 0 0-1-.6h-1a1 1 0 0 0-1 .6l-.5.9a7.7 7.7 0 0 0-1 .4l-.9-.5a1 1 0 0 0-1.2.2l-.7.7a1 1 0 0 0-.2 1.2l.5.9a7.7 7.7 0 0 0-.4 1l-.9.5a1 1 0 0 0-.6 1v1a1 1 0 0 0 .6 1l.9.5a7.7 7.7 0 0 0 .4 1l-.5.9a1 1 0 0 0 .2 1.2l.7.7a1 1 0 0 0 1.2.2l.9-.5a7.7 7.7 0 0 0 1 .4l.5.9a1 1 0 0 0 1 .6h1a1 1 0 0 0 1-.6l.5-.9a7.7 7.7 0 0 0 1-.4l.9.5a1 1 0 0 0 1.2-.2l.7-.7a1 1 0 0 0 .2-1.2l-.5-.9a7.7 7.7 0 0 0 .4-1l.9-.5a1 1 0 0 0 .6-1v-1a1 1 0 0 0-.6-1Z" />
+          </svg>
+        </span>
+        <div>
+          <h1 class="text-2xl font-bold text-slate-900">Settings</h1>
+          <p class="mt-1 text-sm text-slate-500">Manage your account, preferences and application settings.</p>
+        </div>
+      </div>
+
+      <div class="mt-6 grid items-start gap-4 xl:grid-cols-[280px_1fr]">
+        <aside class="rounded-2xl bg-white p-3 shadow-sm">
+          <button type="button" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left" [class.bg-blue-50]="section() === 'account'" (click)="selectSection('account')">
+            <span class="mt-0.5 text-blue-600">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm0 2c-4 0-7 2-7 4v1h14v-1c0-2-3-4-7-4Z" /></svg>
+            </span>
+            <span>
+              <span class="block text-sm font-semibold text-slate-900">Account</span>
+              <span class="block text-xs text-slate-500">Update your personal information</span>
+            </span>
+          </button>
+          <button type="button" class="mt-1 flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left" [class.bg-blue-50]="section() === 'security'" (click)="selectSection('security')">
+            <span class="mt-0.5 text-slate-500">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M12 2 5 5v6c0 5 3.2 8.4 7 9 3.8-.6 7-4 7-9V5l-7-3Zm0 10.2a1.7 1.7 0 1 1 1.7-1.7A1.7 1.7 0 0 1 12 12.2Zm2 1.3-.6 3.5h-2.8l-.6-3.5a3 3 0 1 1 4 0Z" /></svg>
+            </span>
+            <span>
+              <span class="block text-sm font-semibold text-slate-900">Security</span>
+              <span class="block text-xs text-slate-500">Password and authentication</span>
+            </span>
+          </button>
+          <button type="button" class="mt-1 flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left" [class.bg-blue-50]="section() === 'notifications'" (click)="selectSection('notifications')">
+            <span class="mt-0.5 text-slate-500">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M12 22a2.2 2.2 0 0 0 2.2-2h-4.4A2.2 2.2 0 0 0 12 22Zm7-6V11a7 7 0 0 0-5-6.7V4a2 2 0 1 0-4 0v.3A7 7 0 0 0 5 11v5l-2 2v1h18v-1l-2-2Z" /></svg>
+            </span>
+            <span>
+              <span class="block text-sm font-semibold text-slate-900">Notifications</span>
+              <span class="block text-xs text-slate-500">Manage your notifications</span>
+            </span>
+          </button>
+          <button type="button" class="mt-1 flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left" [class.bg-blue-50]="section() === 'preferences'" (click)="selectSection('preferences')">
+            <span class="mt-0.5 text-slate-500">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M12 2a7 7 0 0 0-1 13.9V18H9v2h2v2h2v-2h2v-2h-2v-2.1A7 7 0 0 0 12 2Zm0 2a5 5 0 1 1-5 5 5 5 0 0 1 5-5Z" /></svg>
+            </span>
+            <span>
+              <span class="block text-sm font-semibold text-slate-900">Preferences</span>
+              <span class="block text-xs text-slate-500">App and display settings</span>
+            </span>
+          </button>
+          <button type="button" class="mt-1 flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left" [class.bg-blue-50]="section() === 'billing'" (click)="selectSection('billing')">
+            <span class="mt-0.5 text-slate-500">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v3H3V6Zm0 5h18v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7Zm3 3h5v2H6v-2Z" /></svg>
+            </span>
+            <span>
+              <span class="block text-sm font-semibold text-slate-900">Billing</span>
+              <span class="block text-xs text-slate-500">Payment methods and invoices</span>
+            </span>
+          </button>
+        </aside>
+
+        <div class="space-y-4">
+          <article id="account" class="rounded-2xl bg-white p-5 shadow-sm">
+            <div class="flex items-start justify-between gap-3">
+              <div class="flex items-start gap-3">
+                <span class="mt-0.5 text-blue-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm0 2c-4 0-7 2-7 4v1h14v-1c0-2-3-4-7-4Z" /></svg>
+                </span>
+                <div>
+                  <h2 class="font-semibold text-slate-900">Profile Information</h2>
+                  <p class="text-xs text-slate-400">Update your personal details and profile picture.</p>
+                </div>
+              </div>
+              @if (!editing()) {
+                <button type="button" class="inline-flex items-center gap-1 text-sm font-medium text-blue-600" (click)="startEdit()">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4"><path d="M4 17.2V20h2.8l8.2-8.2-2.8-2.8L4 17.2ZM18.7 8.1a1 1 0 0 0 0-1.4l-1.4-1.4a1 1 0 0 0-1.4 0l-1.1 1.1 2.8 2.8 1.1-1.1Z" /></svg>
+                  Edit
+                </button>
+              }
+            </div>
+
+            <div class="mt-5 flex flex-col gap-6 lg:flex-row lg:items-center">
+              <span class="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-slate-200 text-slate-500">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-9 w-9"><path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm0 2c-4.4 0-8 2.2-8 5v1h16v-1c0-2.8-3.6-5-8-5Z" /></svg>
+              </span>
+              <div class="grid flex-1 gap-4 sm:grid-cols-3">
+                <label class="block text-xs text-slate-400">
+                  Full Name
+                  @if (editing()) {
+                    <input class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none focus:border-blue-500" [value]="name()" (input)="name.set($any($event.target).value)" />
+                  } @else {
+                    <span class="mt-1 block text-sm font-medium text-slate-900">{{ name() }}</span>
+                  }
+                </label>
+                <label class="block text-xs text-slate-400">
+                  Email Address
+                  @if (editing()) {
+                    <input type="email" class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none focus:border-blue-500" [value]="email()" (input)="email.set($any($event.target).value)" />
+                  } @else {
+                    <span class="mt-1 block text-sm font-medium text-slate-900">{{ email() }}</span>
+                  }
+                </label>
+                <label class="block text-xs text-slate-400">
+                  Phone Number
+                  @if (editing()) {
+                    <input class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none focus:border-blue-500" [value]="phone()" (input)="phone.set($any($event.target).value)" />
+                  } @else {
+                    <span class="mt-1 block text-sm font-medium text-slate-900">{{ phone() || 'Not added' }}</span>
+                  }
+                </label>
+              </div>
+            </div>
+
+            @if (editing()) {
+              <div class="mt-4 flex justify-end gap-2">
+                <button type="button" class="rounded-lg px-3 py-2 text-sm font-medium text-slate-600" (click)="cancelEdit()">Cancel</button>
+                <button type="button" class="rounded-lg bg-blue-600 px-3 py-2 text-sm font-medium text-white" (click)="saveProfile()">Save profile</button>
+              </div>
+            }
+            @if (profileMessage()) {
+              <p class="mt-3 text-sm" [class.text-red-600]="profileError()" [class.text-emerald-600]="!profileError()">{{ profileMessage() }}</p>
+            }
+          </article>
+
+          <article id="security" class="rounded-2xl bg-white p-5 shadow-sm">
+            <div class="flex items-start justify-between gap-3">
+              <div class="flex items-start gap-3">
+                <span class="mt-0.5 text-blue-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M17 9V7a5 5 0 0 0-10 0v2H5v12h14V9h-2Zm-8 0V7a3 3 0 0 1 6 0v2H9Z" /></svg>
+                </span>
+                <div>
+                  <h2 class="font-semibold text-slate-900">Change Password</h2>
+                  <p class="text-xs text-slate-400">Keep your account secure with a strong password.</p>
+                </div>
+              </div>
+              <button type="button" class="inline-flex items-center gap-1 rounded-lg bg-blue-50 px-3 py-2 text-sm font-medium text-blue-700" (click)="savePassword()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4"><path d="M17 9V7a5 5 0 0 0-10 0v2H5v12h14V9h-2Zm-8 0V7a3 3 0 0 1 6 0v2H9Z" /></svg>
+                Change Password
+              </button>
+            </div>
+
+            <div class="mt-5 space-y-3">
+              <label class="grid items-center gap-3 text-sm text-slate-600 sm:grid-cols-[180px_1fr]">
+                Current Password
+                <span class="relative">
+                  <input class="w-full rounded-lg border border-slate-200 px-3 py-2 pr-10 outline-none focus:border-blue-500" [type]="showCurrent() ? 'text' : 'password'" [value]="currentPassword()" (input)="currentPassword.set($any($event.target).value)" />
+                  <button type="button" class="absolute right-2 top-2 text-slate-400" (click)="showCurrent.set(!showCurrent())">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M12 5c5 0 9 4.2 10 7-1 2.8-5 7-10 7S3 14.8 2 12c1-2.8 5-7 10-7Zm0 3a4 4 0 1 0 4 4 4 4 0 0 0-4-4Zm0 2a2 2 0 1 1-2 2 2 2 0 0 1 2-2Z" /></svg>
+                  </button>
+                </span>
+              </label>
+              <label class="grid items-center gap-3 text-sm text-slate-600 sm:grid-cols-[180px_1fr]">
+                New Password
+                <span class="relative">
+                  <input class="w-full rounded-lg border border-slate-200 px-3 py-2 pr-10 outline-none focus:border-blue-500" [type]="showNew() ? 'text' : 'password'" [value]="newPassword()" (input)="newPassword.set($any($event.target).value)" />
+                  <button type="button" class="absolute right-2 top-2 text-slate-400" (click)="showNew.set(!showNew())">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M12 5c5 0 9 4.2 10 7-1 2.8-5 7-10 7S3 14.8 2 12c1-2.8 5-7 10-7Zm0 3a4 4 0 1 0 4 4 4 4 0 0 0-4-4Zm0 2a2 2 0 1 1-2 2 2 2 0 0 1 2-2Z" /></svg>
+                  </button>
+                </span>
+              </label>
+              <label class="grid items-center gap-3 text-sm text-slate-600 sm:grid-cols-[180px_1fr]">
+                Confirm New Password
+                <span class="relative">
+                  <input class="w-full rounded-lg border border-slate-200 px-3 py-2 pr-10 outline-none focus:border-blue-500" [type]="showConfirm() ? 'text' : 'password'" [value]="confirmPassword()" (input)="confirmPassword.set($any($event.target).value)" />
+                  <button type="button" class="absolute right-2 top-2 text-slate-400" (click)="showConfirm.set(!showConfirm())">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M12 5c5 0 9 4.2 10 7-1 2.8-5 7-10 7S3 14.8 2 12c1-2.8 5-7 10-7Zm0 3a4 4 0 1 0 4 4 4 4 0 0 0-4-4Zm0 2a2 2 0 1 1-2 2 2 2 0 0 1 2-2Z" /></svg>
+                  </button>
+                </span>
+              </label>
+            </div>
+            @if (passwordMessage()) {
+              <p class="mt-3 text-sm" [class.text-red-600]="passwordError()" [class.text-emerald-600]="!passwordError()">{{ passwordMessage() }}</p>
+            }
+          </article>
+
+          <div class="grid gap-4 xl:grid-cols-2">
+            <article id="notifications" class="rounded-2xl bg-white p-5 shadow-sm">
+              <div class="flex items-start gap-3">
+                <span class="mt-0.5 text-blue-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M12 22a2.2 2.2 0 0 0 2.2-2h-4.4A2.2 2.2 0 0 0 12 22Zm7-6V11a7 7 0 0 0-5-6.7V4a2 2 0 1 0-4 0v.3A7 7 0 0 0 5 11v5l-2 2v1h18v-1l-2-2Z" /></svg>
+                </span>
+                <div>
+                  <h2 class="font-semibold text-slate-900">Notification Preferences</h2>
+                  <p class="text-xs text-slate-400">Choose what you want to be notified about.</p>
+                </div>
+              </div>
+              <ul class="mt-4 space-y-4">
+                <li class="flex items-center justify-between gap-3">
+                  <span>
+                    <span class="block text-sm font-medium text-slate-800">Project updates</span>
+                    <span class="block text-xs text-slate-400">Get notified when a project status changes.</span>
+                  </span>
+                  <button type="button" class="relative h-6 w-11 shrink-0 rounded-full" [class.bg-blue-600]="notifications().projectUpdates" [class.bg-slate-200]="!notifications().projectUpdates" (click)="toggleNotification('projectUpdates')">
+                    <span class="absolute top-0.5 h-5 w-5 rounded-full bg-white" [class.left-5]="notifications().projectUpdates" [class.left-0.5]="!notifications().projectUpdates"></span>
+                  </button>
+                </li>
+                <li class="flex items-center justify-between gap-3">
+                  <span>
+                    <span class="block text-sm font-medium text-slate-800">Payment received</span>
+                    <span class="block text-xs text-slate-400">Get notified when you receive a payment.</span>
+                  </span>
+                  <button type="button" class="relative h-6 w-11 shrink-0 rounded-full" [class.bg-blue-600]="notifications().paymentReceived" [class.bg-slate-200]="!notifications().paymentReceived" (click)="toggleNotification('paymentReceived')">
+                    <span class="absolute top-0.5 h-5 w-5 rounded-full bg-white" [class.left-5]="notifications().paymentReceived" [class.left-0.5]="!notifications().paymentReceived"></span>
+                  </button>
+                </li>
+                <li class="flex items-center justify-between gap-3">
+                  <span>
+                    <span class="block text-sm font-medium text-slate-800">New client messages</span>
+                    <span class="block text-xs text-slate-400">Get notified when a client sends you a message.</span>
+                  </span>
+                  <button type="button" class="relative h-6 w-11 shrink-0 rounded-full" [class.bg-blue-600]="notifications().clientMessages" [class.bg-slate-200]="!notifications().clientMessages" (click)="toggleNotification('clientMessages')">
+                    <span class="absolute top-0.5 h-5 w-5 rounded-full bg-white" [class.left-5]="notifications().clientMessages" [class.left-0.5]="!notifications().clientMessages"></span>
+                  </button>
+                </li>
+                <li class="flex items-center justify-between gap-3">
+                  <span>
+                    <span class="block text-sm font-medium text-slate-800">Marketing updates</span>
+                    <span class="block text-xs text-slate-400">Get notified about new features and offers.</span>
+                  </span>
+                  <button type="button" class="relative h-6 w-11 shrink-0 rounded-full" [class.bg-blue-600]="notifications().marketing" [class.bg-slate-200]="!notifications().marketing" (click)="toggleNotification('marketing')">
+                    <span class="absolute top-0.5 h-5 w-5 rounded-full bg-white" [class.left-5]="notifications().marketing" [class.left-0.5]="!notifications().marketing"></span>
+                  </button>
+                </li>
+              </ul>
+            </article>
+
+            <article id="preferences" class="rounded-2xl bg-white p-5 shadow-sm">
+              <div class="flex items-start gap-3">
+                <span class="mt-0.5 text-blue-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M12 2a7 7 0 0 0-1 13.9V18H9v2h2v2h2v-2h2v-2h-2v-2.1A7 7 0 0 0 12 2Z" /></svg>
+                </span>
+                <div>
+                  <h2 class="font-semibold text-slate-900">Appearance</h2>
+                  <p class="text-xs text-slate-400">Customize how the app looks for you.</p>
+                </div>
+              </div>
+              <p class="mt-4 text-sm text-slate-600">Theme</p>
+              <div class="mt-2 grid grid-cols-3 gap-2 rounded-xl bg-slate-100 p-1">
+                <button type="button" class="rounded-lg px-2 py-2 text-sm" [class.bg-blue-600]="theme() === 'light'" [class.text-white]="theme() === 'light'" [class.text-slate-600]="theme() !== 'light'" (click)="setTheme('light')">Light</button>
+                <button type="button" class="rounded-lg px-2 py-2 text-sm" [class.bg-blue-600]="theme() === 'dark'" [class.text-white]="theme() === 'dark'" [class.text-slate-600]="theme() !== 'dark'" (click)="setTheme('dark')">Dark</button>
+                <button type="button" class="rounded-lg px-2 py-2 text-sm" [class.bg-blue-600]="theme() === 'system'" [class.text-white]="theme() === 'system'" [class.text-slate-600]="theme() !== 'system'" (click)="setTheme('system')">System</button>
+              </div>
+              <label class="mt-4 block text-sm text-slate-600">
+                Language
+                <select class="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none focus:border-blue-500" [value]="language()" (change)="setLanguage($any($event.target).value)">
+                  @for (item of languages; track item) {
+                    <option [value]="item">{{ item }}</option>
+                  }
+                </select>
+              </label>
+            </article>
+          </div>
+
+          <article id="billing" class="rounded-2xl bg-white p-5 shadow-sm">
+            <h2 class="font-semibold text-slate-900">Billing</h2>
+            <p class="mt-1 text-sm text-slate-500">Payment methods and invoices are not set up in this app.</p>
+          </article>
+
+          <div class="flex items-center justify-end gap-3">
+            @if (preferencesMessage()) {
+              <p class="text-sm" [class.text-red-600]="preferencesError()" [class.text-emerald-600]="!preferencesError()">{{ preferencesMessage() }}</p>
+            }
+            <button type="button" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white" (click)="savePreferences()">Save Changes</button>
+          </div>
+        </div>
+      </div>
     </main>
   </div>
 </div>
