@@ -1,9 +1,13 @@
 <header class="flex items-center justify-between gap-4 border-b border-slate-200 bg-white px-6 py-4 dark:border-slate-800 dark:bg-slate-900">
-  <input
-    type="search"
-    placeholder="Search projects, clients..."
-    class="w-full max-w-md rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm text-slate-700 outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
-  />
+  <form class="w-full max-w-md" (submit)="search($event)">
+    <input
+      type="search"
+      placeholder="Search projects, clients..."
+      class="w-full rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm text-slate-700 outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+      [value]="query()"
+      (input)="query.set($any($event.target).value)"
+    />
+  </form>
   <div class="flex shrink-0 items-center gap-4">
     <a routerLink="/notifications" class="relative text-slate-500" aria-label="Notifications">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">

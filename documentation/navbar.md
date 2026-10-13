@@ -17,7 +17,7 @@ Selector: `app-navbar`.
 
 From left to right:
 
-1. A search box with the placeholder “Search projects, clients...”. It does not filter data yet.
+1. A search box with the placeholder “Search projects, clients...”. Press Enter to open `/search` with matching clients and projects.
 2. A notification bell. It opens `/notifications`. A red badge shows the unread count, up to `9+`. Details are in `documentation/notifications.md`.
 3. A blue profile icon.
 4. The name of the freelancer who is logged in.

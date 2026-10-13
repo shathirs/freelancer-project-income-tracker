@@ -8,6 +8,7 @@ import { Login } from './pages/login/login';
 import { Projects } from './pages/projects/projects';
 import { Register } from './pages/register/register';
 import { Reports } from './pages/reports/reports';
+import { Search } from './pages/search/search';
 import { Settings } from './pages/settings/settings';
 
 export const routes: Routes = [
@@ -20,5 +21,6 @@ export const routes: Routes = [
     { path: 'income', component: Income, canActivate: [authGuard] },
     { path: 'reports', component: Reports, canActivate: [authGuard] },
     { path: 'notifications', component: Notifications, canActivate: [authGuard] },
+    { path: 'search', component: Search, canActivate: [authGuard] },
     { path: 'settings', component: Settings, canActivate: [authGuard] },
 ];
